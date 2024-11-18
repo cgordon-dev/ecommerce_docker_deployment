@@ -1,0 +1,15 @@
+FROM node:14
+
+WORKDIR /app
+
+# Copy only necessary files for dependencies first to leverage Docker cache
+COPY ./frontend/package.json ./frontend/package-lock.json ./
+RUN npm ci
+
+# Copy the rest of the application
+COPY ./frontend ./
+
+EXPOSE 3000
+
+ENTRYPOINT ["npm", "start"]
+
