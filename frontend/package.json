@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "proxy": "http://backend:8000", 
+  "proxy": "http://ecommerce-backend:8000", 
   "private": true,
   "dependencies": {
     "@stripe/react-stripe-js": "^1.4.1",
