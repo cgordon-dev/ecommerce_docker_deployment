@@ -26,7 +26,7 @@ pipeline {
         source venv/bin/activate
         pip install pytest-django
         python manage.py migrate
-        pytest backend/account/tests.py --verbose --junit-xml test-reports/results.xml
+        pytest backend/account/tests.py --reuse-db --verbose --junit-xml test-reports/results.xml
         '''
       }
     }
