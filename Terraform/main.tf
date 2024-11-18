@@ -11,11 +11,11 @@ provider "aws" {
   region     = var.region
 }
 
-module "VPC" {
+module "vpc" {
   source = "./modules/vpc"
 }
 
-module "RDS" {
+module "rds" {
   source = "./modules/rds"
   vpc_id = module.VPC.vpc_id
   private_subnet_id = module.VPC.private_subnet_id_1
@@ -24,7 +24,7 @@ module "RDS" {
   depends_on = [module.VPC]
 }
 
-module "EC2" {
+module "ec2" {
   source = "./modules/ec2"
   vpc_id = module.VPC.vpc_id
   public_subnet_id_1 = module.VPC.public_subnet_id_1
@@ -38,7 +38,7 @@ module "EC2" {
   depends_on = [module.RDS]
 }
 
-module "Load" {
+module "load" {
   source = "./modules/load"
   vpc_id = module.VPC.vpc_id
   public_subnet_id_1 =  module.VPC.public_subnet_id_1
