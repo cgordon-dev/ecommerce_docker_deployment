@@ -6,25 +6,26 @@ pipeline {
   }
 
   stages {
-    stage ('Build') {
+    stage('Build') {
       agent any
       steps {
         sh '''#!/bin/bash
-        <code to build the application>
+          python3.9 -m venv venv
+          source venv/bin/activate
+          pip install pip --upgrade
+          pip install -r backend/requirements.txt
         '''
       }
     }
 
-    stage ('Test') {
+    stage('Test') {
       agent any
       steps {
         sh '''#!/bin/bash
-        <code to activate virtual environment>
+        source venv/bin/activate
         pip install pytest-django
-        python backend/manage.py makemigrations
-        python backend/manage.py migrate
         pytest backend/account/tests.py --verbose --junit-xml test-reports/results.xml
-        ''' 
+        '''
       }
     }
 
@@ -32,7 +33,7 @@ pipeline {
       agent { label 'build-node' }
       steps {
         sh '''
-          # Only clean Docker system
+          echo "Performing in-pipeline cleanup after Test..."
           docker system prune -f
           
           # Safer git clean that preserves terraform state
@@ -48,14 +49,14 @@ pipeline {
         
         // Build and push backend
         sh '''
-          docker build -t <backend image tagged for dockerhub>:latest -f Dockerfile.backend .
-          docker push <backend image tagged for dockerhub:latest
+          docker build -t cgordondev/ecommerce_backend:latest -f Dockerfile.backend .
+          docker push cgordondev/ecommerce_backend:latest
         '''
         
         // Build and push frontend
         sh '''
-          docker build -t <frontent image tagged for dockerhub>:latest -f Dockerfile.frontend .
-          docker push <frontend image tagged for dockerhub>:latest
+          docker build -t cgordondev/ecommerce_frontend:latest -f Dockerfile.frontend .
+          docker push cgordondev/ecommerce_frontend:latest
         '''
       }
     }
@@ -73,13 +74,13 @@ pipeline {
         }
       }
     }
-  }
 
-  post {
-    always {
+    // Finalize Stage (Replaces post block)
+    stage('Finalize') {
       agent { label 'build-node' }
       steps {
         sh '''
+          echo "Performing final cleanup tasks..."
           docker logout
           docker system prune -f
         '''
