@@ -10,6 +10,10 @@ pipeline {
       agent any
       steps {
         sh '''#!/bin/bash
+          sudo apt update
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt install software-properties-common -y
+          sudo apt install python3.9 python3.9-venv python3.9-dev -y
           python3.9 -m venv venv
           source venv/bin/activate
           pip install pip --upgrade
