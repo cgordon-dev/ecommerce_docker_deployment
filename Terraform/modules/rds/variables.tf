@@ -12,13 +12,13 @@ variable "db_name" {
 variable "db_username" {
   description = "Username for the master DB user"
   type        = string
-  default     = "kurac5user"
+  default     = "userdb"
 }
 
 variable "db_password" {
     description = "password for db user"
     type = string
-    default = "kurac5password"
+    default = "abcd1234"
 }
 
 variable "vpc_id" {
