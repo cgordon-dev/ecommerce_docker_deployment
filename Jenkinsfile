@@ -19,26 +19,6 @@ pipeline {
       }
     }
 
-    // stage('Test') {
-    //   agent any
-    //   steps {
-    //     sh '''#!/bin/bash
-    //     source venv/bin/activate
-    //     pip install pytest-django
-
-    //     # Ensure migrations are up-to-date
-    //     echo "Running makemigrations and migrate to set up the database..."
-    //     python manage.py makemigrations --noinput
-    //     python manage.py migrate --noinput        
-        
-    //     # Run tests
-    //     echo "Running tests with reuse-db option..."
-    //     pytest backend/account/tests.py --reuse-db --verbose --junit-xml test-reports/results.xml
-        
-    //     '''
-    //   }
-    // }
-
     stage('Cleanup') {
       agent { label 'build-node' }
       steps {
@@ -76,20 +56,22 @@ pipeline {
       steps {
         dir('Terraform') {
           withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')
-                ]) {
-          sh '''
-            terraform init
-            terraform apply -auto-approve \
-              -var="dockerhub_username=${DOCKER_CREDS_USR}" \
-              -var="dockerhub_password=${DOCKER_CREDS_PSW}"
-          '''
+            string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'),
+            string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')
+          ]) {
+            sh '''
+              terraform init
+              terraform apply -auto-approve \
+                -var="dockerhub_username=${DOCKER_CREDS_USR}" \
+                -var="dockerhub_password=${DOCKER_CREDS_PSW}" \
+                -var="aws_access_key=${AWS_ACCESS_KEY}" \
+                -var="aws_secret_key=${AWS_SECRET_KEY}"
+            '''
+          }
         }
       }
     }
 
-    // Finalize Stage (Replaces post block)
     stage('Finalize') {
       agent { label 'build-node' }
       steps {
@@ -101,4 +83,4 @@ pipeline {
       }
     }
   }
-  
+}
