@@ -75,6 +75,10 @@ pipeline {
       agent { label 'build-node' }
       steps {
         dir('Terraform') {
+          withCredentials([
+                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'),
+                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')
+                ]) {
           sh '''
             terraform init
             terraform apply -auto-approve \
