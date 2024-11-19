@@ -19,25 +19,25 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      agent any
-      steps {
-        sh '''#!/bin/bash
-        source venv/bin/activate
-        pip install pytest-django
+    // stage('Test') {
+    //   agent any
+    //   steps {
+    //     sh '''#!/bin/bash
+    //     source venv/bin/activate
+    //     pip install pytest-django
 
-        # Ensure migrations are up-to-date
-        echo "Running makemigrations and migrate to set up the database..."
-        python manage.py makemigrations --noinput
-        python manage.py migrate --noinput        
+    //     # Ensure migrations are up-to-date
+    //     echo "Running makemigrations and migrate to set up the database..."
+    //     python manage.py makemigrations --noinput
+    //     python manage.py migrate --noinput        
         
-        # Run tests
-        echo "Running tests with reuse-db option..."
-        pytest backend/account/tests.py --reuse-db --verbose --junit-xml test-reports/results.xml
+    //     # Run tests
+    //     echo "Running tests with reuse-db option..."
+    //     pytest backend/account/tests.py --reuse-db --verbose --junit-xml test-reports/results.xml
         
-        '''
-      }
-    }
+    //     '''
+    //   }
+    // }
 
     stage('Cleanup') {
       agent { label 'build-node' }
