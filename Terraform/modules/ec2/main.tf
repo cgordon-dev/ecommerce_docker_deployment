@@ -90,7 +90,7 @@ resource "aws_instance" "ecommerce_app_az1"{
     docker_user = var.dockerhub_username,
     docker_pass = var.dockerhub_password,
     docker_compose = templatefile("./compose.yml", {
-      rds_endpoint = var.rds_endpoint
+      rds_endpoint = var.rds_endpoint,
       run_migrations = "true"
     })
   }))
@@ -112,7 +112,7 @@ resource "aws_instance" "ecommerce_app_az2"{
     docker_user = var.dockerhub_username,
     docker_pass = var.dockerhub_password,
     docker_compose = templatefile("./compose.yml", {
-      rds_endpoint = var.rds_endpoint
+      rds_endpoint = var.rds_endpoint,
       run_migrations = "false"
     })
   }))
