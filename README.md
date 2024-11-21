@@ -670,7 +670,7 @@ This script implements an anomaly detection model using an autoencoder to identi
 - **Loss Function**: Measures reconstruction loss using Mean Squared Error (MSE).
 - **Optimizer**: Adam optimizer is chosen for efficient and adaptive learning.
 
----
+![cluster](images/clusters.png)---
 
 ### Data Preprocessing
 
@@ -703,7 +703,8 @@ This script implements an anomaly detection model using an autoencoder to identi
 ---
 
 ## Results
-
+![cluster](images/results.png)
+---
 ### Model Architecture
 
 - **Trainable Parameters**: 570.
