@@ -77,7 +77,7 @@ This workload demonstrates how to combine containerization, automation, and IaC 
     - 1x Custom VPC named "wl6vpc" in us-east-1
     - 2x Availability Zones, we're using us-east-1a and us-east-1b.
     - 2x Public Subnets and 2x Private Subnets. One of each in each AZ.
-    - 1x Internet Gateway, 1x NAT Gateways and 1x Elastic IP to assign to my NAT Gateway, one NAT in one     Public Subnet. 
+    - 1x Internet Gateway, 2x NAT Gateways and 1x Elastic IP to assign to my NAT Gateway, one NAT in one     Public Subnet. 
     - 2x Route Tables, 1x Public Route Table for both Public Subnets, 1x Route Table for both private subnets
     - 4x Route Table Associations.
         - 2x for Public Subnets to Public Route Table.
@@ -311,11 +311,11 @@ This workload demonstrates how to combine containerization, automation, and IaC 
 12. Create a Multi-Branch pipeline called "workload_6" and run the pipeline to deploy the application!
 
     **Jenkins Pipeline**
-    ![pipeline_overview](Documentation/pipeline_overview.png)
+    ![pipeline_overview](images/pipeline_overview.png)
 
-    ![successful_build](Documentation/successful_build.png)
+    ![successful_build](images/successful_build.png)
 
-    ![running_app](Documentation/app.png)
+    ![running_app](images/frontend.png)
 
 13. Create a monitoring EC2 in the default VPC that will monitor the resources of your ecommerce-app servers. Install Prometheus and grafana on this server.
 
@@ -324,13 +324,13 @@ This workload demonstrates how to combine containerization, automation, and IaC 
 15. Restart Prometheus to apply the changes. You should now be able to see all of your targets in Prometheus.
 
     **Prometheus**
-![prometheus](Documentation/prometheus_targets.png)
+![prometheus](images/prometheus_targets.png)
 
 16. Set up and configure your grafana dashboard. You should have two dashboards for each of the servers:
 
     **Grafana**
-![grafana_1](Documentation/grafana_1.png)
-![grafana_2](Documentation/grafana_2.png)
+![grafana_1](images/grafana_1.png)
+![grafana_2](images/grafana_2.png)
 
 ## System Design Diagram
 
@@ -521,7 +521,7 @@ The environment variable is set in the docker-compose.yml file for the backend s
 ```yaml
 services:
   backend:
-    image: tjwkura5/ecommerce_back:latest
+    image: cgordondev/ecommerce_backend:latest
     container_name: ecommerce-backend
     environment:
       - DB_HOST=${rds_endpoint}
@@ -600,7 +600,7 @@ These changes ensure the React development server functions properly inside the 
 ```yaml
 services:
   frontend:
-    image: tjwkura5/ecommerce_front:latest
+    image: cgordondev/ecommerce_frontend:latest
     container_name: ecommerce-frontend
     environment:
       - CHOKIDAR_USEPOLLING=true  # Ensures file watchers work in Docker
@@ -670,7 +670,7 @@ This script implements an anomaly detection model using an autoencoder to identi
 - **Loss Function**: Measures reconstruction loss using Mean Squared Error (MSE).
 - **Optimizer**: Adam optimizer is chosen for efficient and adaptive learning.
 
----
+![cluster](images/clusters.png)---
 
 ### Data Preprocessing
 
@@ -703,7 +703,8 @@ This script implements an anomaly detection model using an autoencoder to identi
 ---
 
 ## Results
-
+![cluster](images/results.png)
+---
 ### Model Architecture
 
 - **Trainable Parameters**: 570.
@@ -711,7 +712,9 @@ This script implements an anomaly detection model using an autoencoder to identi
 - **Encoder Compression**: `[16, 8, 4]`.
 - **Decoder Reconstruction**: Reconstructs input back to the original shape.
 
-### Performance on Test Data
+### Performance on Training/Test Data
+
+![training results](AI_Concentration/reconstruction_error_distribution.png)
 
 - **Threshold**: `2.0501` (95th percentile of errors).
 - **Reconstruction Error Metrics**:
@@ -722,16 +725,14 @@ This script implements an anomaly detection model using an autoencoder to identi
   - Standard Deviation: `0.5461`
 - **Anomalies**: Detected 30 anomalies (4.99% of test data). Top 5 anomalies were identified with details.
 
-### Fraud Detection on New Dataset
+### Fraud Detection on account_stripemodel_fraud_detection dataset
+
+![training results](AI_Concentration/new_dataset_reconstruction_error_distribution.png)
 
 - **Threshold**: `2.0501`
 - **Results**:
   - Detected 718 anomalies (68.25% of the new dataset).
   - Highlighted the top 5 anomalies with reconstruction errors and transaction details.
-
-### Visualization
-
-A histogram showing the distribution of reconstruction errors with the anomaly detection threshold was saved. This visualizes how anomalies differ from normal transactions.
 
 ---
 
