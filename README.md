@@ -324,13 +324,13 @@ This workload demonstrates how to combine containerization, automation, and IaC 
 15. Restart Prometheus to apply the changes. You should now be able to see all of your targets in Prometheus.
 
     **Prometheus**
-![prometheus](Documentation/prometheus_targets.png)
+![prometheus](images/prometheus_targets.png)
 
 16. Set up and configure your grafana dashboard. You should have two dashboards for each of the servers:
 
     **Grafana**
-![grafana_1](Documentation/grafana_1.png)
-![grafana_2](Documentation/grafana_2.png)
+![grafana_1](images/grafana_1.png)
+![grafana_2](images/grafana_2.png)
 
 ## System Design Diagram
 
