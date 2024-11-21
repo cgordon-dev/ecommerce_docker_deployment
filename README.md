@@ -311,11 +311,11 @@ This workload demonstrates how to combine containerization, automation, and IaC 
 12. Create a Multi-Branch pipeline called "workload_6" and run the pipeline to deploy the application!
 
     **Jenkins Pipeline**
-    ![pipeline_overview](Documentation/pipeline_overview.png)
+    ![pipeline_overview](images/pipeline_overview.png)
 
-    ![successful_build](Documentation/successful_build.png)
+    ![successful_build](images/successful_build.png)
 
-    ![running_app](Documentation/app.png)
+    ![running_app](images/frontend.png)
 
 13. Create a monitoring EC2 in the default VPC that will monitor the resources of your ecommerce-app servers. Install Prometheus and grafana on this server.
 
