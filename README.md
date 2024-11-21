@@ -521,7 +521,7 @@ The environment variable is set in the docker-compose.yml file for the backend s
 ```yaml
 services:
   backend:
-    image: tjwkura5/ecommerce_back:latest
+    image: cgordondev/ecommerce_backend:latest
     container_name: ecommerce-backend
     environment:
       - DB_HOST=${rds_endpoint}
@@ -600,7 +600,7 @@ These changes ensure the React development server functions properly inside the 
 ```yaml
 services:
   frontend:
-    image: tjwkura5/ecommerce_front:latest
+    image: cgordondev/ecommerce_frontend:latest
     container_name: ecommerce-frontend
     environment:
       - CHOKIDAR_USEPOLLING=true  # Ensures file watchers work in Docker
