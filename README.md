@@ -77,7 +77,7 @@ This workload demonstrates how to combine containerization, automation, and IaC 
     - 1x Custom VPC named "wl6vpc" in us-east-1
     - 2x Availability Zones, we're using us-east-1a and us-east-1b.
     - 2x Public Subnets and 2x Private Subnets. One of each in each AZ.
-    - 1x Internet Gateway, 1x NAT Gateways and 1x Elastic IP to assign to my NAT Gateway, one NAT in one     Public Subnet. 
+    - 1x Internet Gateway, 2x NAT Gateways and 1x Elastic IP to assign to my NAT Gateway, one NAT in one     Public Subnet. 
     - 2x Route Tables, 1x Public Route Table for both Public Subnets, 1x Route Table for both private subnets
     - 4x Route Table Associations.
         - 2x for Public Subnets to Public Route Table.
@@ -712,7 +712,9 @@ This script implements an anomaly detection model using an autoencoder to identi
 - **Encoder Compression**: `[16, 8, 4]`.
 - **Decoder Reconstruction**: Reconstructs input back to the original shape.
 
-### Performance on Test Data
+### Performance on Training/Test Data
+
+![training results](AI_Concentration/reconstruction_error_distribution.png)
 
 - **Threshold**: `2.0501` (95th percentile of errors).
 - **Reconstruction Error Metrics**:
@@ -723,16 +725,14 @@ This script implements an anomaly detection model using an autoencoder to identi
   - Standard Deviation: `0.5461`
 - **Anomalies**: Detected 30 anomalies (4.99% of test data). Top 5 anomalies were identified with details.
 
-### Fraud Detection on New Dataset
+### Fraud Detection on account_stripemodel_fraud_detection dataset
+
+![training results](AI_Concentration/new_dataset_reconstruction_error_distribution.png)
 
 - **Threshold**: `2.0501`
 - **Results**:
   - Detected 718 anomalies (68.25% of the new dataset).
   - Highlighted the top 5 anomalies with reconstruction errors and transaction details.
-
-### Visualization
-
-A histogram showing the distribution of reconstruction errors with the anomaly detection threshold was saved. This visualizes how anomalies differ from normal transactions.
 
 ---
 
